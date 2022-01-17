@@ -1,0 +1,10 @@
+node_modules
+uploads
+build
+dist
+
+.env
+yarn-error.log
+/openapi
+
+tmp/

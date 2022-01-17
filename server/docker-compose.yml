@@ -1,0 +1,61 @@
+# source: https://github.com/yowko/docker-compose-create-mongodb-replica-set
+version: "3.7"
+services:
+  backend1:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    ports:
+       - 3000:3000
+    entrypoint: [ "yarn", "start" ]
+    depends_on:
+      mongo3:
+        condition: service_healthy
+    restart: always
+  # backend2:
+  #   build:
+  #     context: ./server
+  #     dockerfile: ./server/Dockerfile
+  #   ports:
+  #      - 3003:3000
+  #   entrypoint: [ "yarn", "start" ]
+  # hardhat:
+  #   build:
+  #     context: .
+  #     dockerfile: ./Dockerfile
+  #   ports:
+  #     - 8545:8545
+  #   entrypoint: [ "yarn", "start" ]
+  #   healthcheck:
+  #     test: yarn deploy && exit 0 # [ "CMD", "yarn", "deploy" ]
+  #     interval: 15s
+  #     timeout: 10s
+  #     retries: 3
+  #     start_period: 5s
+  mongo1:
+    container_name: mongo1
+    image: mongo:5.0.5
+    ports:
+      - 27017:27017
+    restart: always
+    entrypoint: [ "mongod","--port","27017", "--bind_ip_all",   "--replSet", "rs0" ]
+  mongo2:
+    container_name: mongo2
+    image: mongo:5.0.5
+    ports:
+      - 27027:27027
+    restart: always
+    entrypoint: [ "mongod","--port","27027", "--bind_ip_all",   "--replSet", "rs0" ]
+  mongo3:
+    container_name: mongo3
+    image: mongo:5.0.5
+    ports:
+      - 27037:27037
+    restart: always
+    entrypoint: [ "mongod","--port","27037", "--bind_ip_all",   "--replSet", "rs0" ]
+    healthcheck:
+      test: ["CMD","mongo","--host","mongo1","--port","27017",  "--eval", 'rs.initiate( { _id : "rs0",members: [{ _id: 0,     host: "mongo1:27017" },{ _id: 1, host: "mongo2:27027" },{   _id: 2, host: "mongo3:27037" }   ]})']
+      interval: 20s
+      timeout: 15s
+      retries: 3
+      start_period: 10s

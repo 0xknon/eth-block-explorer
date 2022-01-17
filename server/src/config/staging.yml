@@ -1,0 +1,29 @@
+server:
+  aws:
+    s3:
+      bucket: storellet-static
+      host: https://storellet-static.s3.ap-east-1.amazonaws.com
+  firebase:
+    cms:
+      projectId: storellet-cms-stg
+      clientEmail: firebase-adminsdk-9wjkw@storellet-cms-stg.iam.gserviceaccount.com
+    business:
+      projectId: storellet-business-stg
+      clientEmail: firebase-adminsdk-i78ec@storellet-business-stg.iam.gserviceaccount.com
+    public:
+      projectId: storellet-public-stg
+      clientEmail: firebase-adminsdk-svlte@storellet-public-stg.iam.gserviceaccount.com
+  vhost:
+    public: api.stltester.com
+    business: business-api.stltester.com
+    cms: cms-api.stltester.com
+  cors:
+    public:
+      whiteList:
+        - !!js/regexp /.+stltester\.com$/
+    business:
+      whiteList:
+        - !!js/regexp /.+stltester\.com(:\d{2,5})?$/
+    cms:
+      whiteList:
+        - !!js/regexp /.+stltester\.com$/

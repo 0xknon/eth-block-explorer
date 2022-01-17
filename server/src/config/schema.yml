@@ -1,0 +1,52 @@
+env:
+  doc: config set being used
+  env: STAGE
+  format:
+    - local
+    - development
+    - staging
+    - production
+    - test
+  default: development
+server:
+  database:
+    mongodb:
+      doc: MongoDB connection string
+      env: MONGODB_HOST
+      format: String
+      default: null
+  ethereum:
+    dapp:
+      blockSummary:
+        address:
+          doc: address of BlockSummary contract deployed
+          env: BLOCK_SUMMARY_ADDRESS
+          format: String
+          default: null
+  web3:
+    local:
+      account:
+        privateKey:
+          doc: Local hardhat Network Websocket URL
+          env: HARDHAT_WALLET_PRIVATE_KEY
+          format: String
+          default: ''
+      provider:
+        http:
+          doc: Local  hardhat HTTP Network URL
+          format: String
+          default: 'http://127.0.0.1:8545'
+        websocket:
+          doc: Local hardhat Network Websocket URL
+          format: String
+          default: 'ws://localhost:8545'
+    eth:
+      provider:
+        http:
+          doc: Ethereum HTTP Network URL
+          format: String
+          default: 'https://eth-mainnet.alchemyapi.io/v2/wFOQXoWzSwwcH6ocV7y17rglvC8d0MdO'
+        websocket:
+          doc: Ethereum Network Websocket URL
+          format: String
+          default: 'wss://eth-mainnet.alchemyapi.io/v2/wFOQXoWzSwwcH6ocV7y17rglvC8d0MdO'

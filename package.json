@@ -1,5 +1,10 @@
 {
-  "name": "hardhat-project",
+  "name": "eth-block-explorer",
+  "scripts": {
+    "start": "hardhat node",
+    "deploy": "hardhat run --network localhost scripts/deploy.ts",
+    "test": "hardhat test"
+  },
   "devDependencies": {
     "@nomiclabs/hardhat-ethers": "^2.0.4",
     "@nomiclabs/hardhat-etherscan": "^2.1.8",
@@ -24,6 +29,7 @@
     "ethers": "^5.5.3",
     "hardhat": "^2.8.2",
     "hardhat-gas-reporter": "^1.0.7",
+    "hardhat-interface-generator": "^0.0.6",
     "prettier": "^2.5.1",
     "prettier-plugin-solidity": "^1.0.0-beta.13",
     "solhint": "^3.3.6",
@@ -31,5 +37,11 @@
     "ts-node": "^10.4.0",
     "typechain": "^5.2.0",
     "typescript": "^4.5.4"
+  },
+  "dependencies": {
+    "@ethersproject/contracts": "^5.5.0",
+    "@openzeppelin/contracts": "^4.4.2",
+    "dayjs": "^1.10.7",
+    "web3-utils": "^1.6.1"
   }
 }

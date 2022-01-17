@@ -1,0 +1,6 @@
+server:
+  web3:
+    eth:
+      provider: 
+        http: https://eth-mainnet.alchemyapi.io/v2/wFOQXoWzSwwcH6ocV7y17rglvC8d0MdO
+        websocket: wss://eth-mainnet.alchemyapi.io/v2/wFOQXoWzSwwcH6ocV7y17rglvC8d0MdO
