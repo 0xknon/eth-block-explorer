@@ -8,7 +8,7 @@ import "./BlockSummaryBase.sol";
 contract BlockSummary is BlockSummaryBase {
     struct Summary {
         uint256 timestamp;
-        uint16 totalNumOfBlocks;
+        uint256 totalNumOfBlocks;
         uint256 totalGasSpent;
     }
 
@@ -18,7 +18,7 @@ contract BlockSummary is BlockSummaryBase {
         return summaries;
     }
 
-    function addSummary(uint256 _timestamp, uint16 _totalNumOfBlocks, uint256 _totalGasSpent) public onlyOwner {
+    function addSummary(uint256 _timestamp, uint256 _totalNumOfBlocks, uint256 _totalGasSpent) public onlyOwner {
         Summary memory _summary = Summary(_timestamp, _totalNumOfBlocks, _totalGasSpent);
         summaries.push(_summary);
     }

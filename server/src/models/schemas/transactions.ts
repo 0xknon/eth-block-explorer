@@ -18,7 +18,6 @@ const TransactionSchema = new Schema<Transaction>(
   { timestamps: false, versionKey: false },
 );
 
-// Users.virtual('user')
 TransactionSchema.index({ blockNumber: 1, transactionIndex: 1 }, { unique: true });
 
 export default TransactionSchema;

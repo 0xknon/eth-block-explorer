@@ -27,9 +27,9 @@ export const BLOCK_SUMMARY_JSON_INTERFACE = [
         "type": "uint256"
       },
       {
-        "internalType": "uint16",
+        "internalType": "uint256",
         "name": "_totalNumOfBlocks",
-        "type": "uint16"
+        "type": "uint256"
       },
       {
         "internalType": "uint256",
@@ -54,9 +54,9 @@ export const BLOCK_SUMMARY_JSON_INTERFACE = [
             "type": "uint256"
           },
           {
-            "internalType": "uint16",
+            "internalType": "uint256",
             "name": "totalNumOfBlocks",
-            "type": "uint16"
+            "type": "uint256"
           },
           {
             "internalType": "uint256",
@@ -108,9 +108,9 @@ export const BLOCK_SUMMARY_JSON_INTERFACE = [
         "type": "uint256"
       },
       {
-        "internalType": "uint16",
+        "internalType": "uint256",
         "name": "totalNumOfBlocks",
-        "type": "uint16"
+        "type": "uint256"
       },
       {
         "internalType": "uint256",

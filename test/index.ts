@@ -14,7 +14,7 @@ describe("BlockSummary", async function () {
 
   it("should add summary successfully", async function () {
     const timestamp = dayjs("2022-01-01").unix();
-    const totalNumOfBlocks = 12345;
+    const totalNumOfBlocks = 14023965;
     const totalGasSpent = 987654321111;
     const addSummaryTx = await blockSummary.addSummary(
       timestamp,

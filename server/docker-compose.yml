@@ -6,19 +6,23 @@ services:
       context: .
       dockerfile: ./Dockerfile
     ports:
-       - 3000:3000
+       - 3001:3000
     entrypoint: [ "yarn", "start" ]
     depends_on:
       mongo3:
         condition: service_healthy
     restart: always
-  # backend2:
-  #   build:
-  #     context: ./server
-  #     dockerfile: ./server/Dockerfile
-  #   ports:
-  #      - 3003:3000
-  #   entrypoint: [ "yarn", "start" ]
+  backend2:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    ports:
+       - 3002:3000
+    entrypoint: [ "yarn", "start" ]
+    depends_on:
+      mongo3:
+        condition: service_healthy
+    restart: always
   # hardhat:
   #   build:
   #     context: .

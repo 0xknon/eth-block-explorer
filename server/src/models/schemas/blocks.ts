@@ -1,11 +1,12 @@
 import { Schema, Document } from 'mongoose';
 import dayjs from 'dayjs';
+import uniqueValidator from 'mongoose-unique-validator'
 import { Block } from 'src/interfaces';
 import TransactionSchema from './transactions';
 
 const BlockSchema = new Schema<Block>(
   {
-    blockNumber: { type: Number, required: true, unique: true },
+    blockNumber: { type: Number, required: true },
     mixHash:  { type: String, required: true, unique: true },
     timestamp: { 
       type: Date, 
@@ -33,7 +34,7 @@ const BlockSchema = new Schema<Block>(
   { timestamps: false, versionKey: false },
 );
 
-// Users.virtual('user')
-BlockSchema.index({ blockNumber: 1 }, { unique: true });
+BlockSchema.index({ blockNumber: 1 });
+BlockSchema.plugin(uniqueValidator)
 
 export default BlockSchema;

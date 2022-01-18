@@ -3,7 +3,7 @@ uploads
 build
 dist
 
-.env
+# .env
 yarn-error.log
 /openapi
 
