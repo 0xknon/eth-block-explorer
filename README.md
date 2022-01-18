@@ -1,46 +1,62 @@
-# Advanced Sample Hardhat Project
+# ETH Block Explorer
+  
 
-This project demonstrates an advanced Hardhat use case, integrating other tools commonly used alongside Hardhat in the ecosystem.
+The backend has been splitted into two parts:
 
-The project comes with a sample contract, a test for that contract, a sample script that deploys that contract, and an example of a task implementation, which simply lists the available accounts. It also comes with a variety of other tools, preconfigured to work with the project code.
+1. New block subscription
+2. Daily cron job of writing smart contract
 
-Try running some of the following tasks:
+## Get Started
 
-```shell
-npx hardhat accounts
-npx hardhat compile
-npx hardhat clean
-npx hardhat test
-npx hardhat node
-npx hardhat help
-REPORT_GAS=true npx hardhat test
-npx hardhat coverage
-npx hardhat run scripts/deploy.ts
-TS_NODE_FILES=true npx ts-node scripts/deploy.ts
-npx eslint '**/*.{js,ts}'
-npx eslint '**/*.{js,ts}' --fix
-npx prettier '**/*.{json,sol,md}' --check
-npx prettier '**/*.{json,sol,md}' --write
-npx solhint 'contracts/**/*.sol'
-npx solhint 'contracts/**/*.sol' --fix
-```
 
-# Etherscan verification
 
-To try out Etherscan verification, you first need to deploy a contract to an Ethereum network that's supported by Etherscan, such as Ropsten.
+1. Add the following to `/etc/hosts`
 
-In this project, copy the .env.example file to a file named .env, and then edit it to fill in the details. Enter your Etherscan API key, your Ropsten node URL (eg from Alchemy), and the private key of the account which will send the deployment transaction. With a valid .env file in place, first deploy your contract:
+> ```
+> 127.0.0.1       mongo1
+> 127.0.0.1       mongo2
+> 127.0.0.1       mongo3
+> ```
 
-```shell
-hardhat run --network ropsten scripts/sample-script.ts
-```
+2. Start local hardhat network
+> ```
+> yarn && yarn start
+> ```
 
-Then, copy the deployment address and paste it in to replace `DEPLOYED_CONTRACT_ADDRESS` in this command:
 
-```shell
-npx hardhat verify --network ropsten DEPLOYED_CONTRACT_ADDRESS "Hello, Hardhat!"
-```
+3. Deploy smart contract to local network
+> ```
+> yarn deploy
+> ...
+> BlockSummary deployed to: <COPY THE ADDRESS SHOWN>
+> ```
 
-# Performance optimizations
+4. Update `BLOCK_SUMMARY_ADDRESS` in `server/.env` with address copied
 
-For faster runs of your tests and scripts, consider skipping ts-node's type checking by setting the environment variable `TS_NODE_TRANSPILE_ONLY` to `1` in hardhat's environment. For more details see [the documentation](https://hardhat.org/guides/typescript.html#performance-optimizations).
+5. Start the New block subscription and MongoDB
+
+> ```
+> cd server && docker-compose up --build -d
+> ```
+
+
+> MongoDB cluster can be connected with 
+> ```
+> mongodb://mongo1:27017,mongo2:27027,mongo3:27037/eth
+> ```
+
+6. Start the cron job
+> ```
+> yarn && yarn build && yarn start:cron
+> ```
+
+## Notes
+
+The imperfection of the solution will b pointed out here:
+
+1. `.env` is not included in `.gitignore` because of demo purpose
+2. In the solution, 2 subscription backends are running to avoid one of those suddenly down. Unique `mixHash` validation is done to prevent duplciate record. It may increase the loading of database, but probably better than increase the loading to the server to prevent duplicate record insertion.
+3. The logging for `mongoose` is not in JSON format. Not consistent for server monitoring tools like EFK / ELK stack.
+4. If the cron job server is down during the scheduled time, there may be missing record. Manual trigger may be needed or add checking for missing record when the cron job server is restarted.
+5. The `Cron Job` and the `Block Subscrption` are sharing the same code base but deploy separately. This can be good or bad, but the main reason is because the smart contract is easier to deploy to the local hardhat network with fewer commands
+6. `Local hardhat network` is used since it is easier for the demo.
